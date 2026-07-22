@@ -1,0 +1,97 @@
+.todo-app-project {
+  padding: 30px;
+  background-color: #d6e6f2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  .todo-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 450px;
+    margin-top: 40px;
+  }
+
+  .sub-todo-item {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    /* padding: 10px; */
+  }
+
+  /* 
+  .editing-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 10px; */
+  /* } */
+
+  .todo-item {
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+  }
+
+  .done {
+    text-decoration: line-through;
+    background-color: #cbd5dcbc;
+    color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+  }
+
+  button {
+    border: solid black 1px;
+    border-radius: 5px;
+    margin: 1px;
+  }
+
+  input {
+    border: solid 2px;
+    border-radius: 3px;
+    background-color: #f5ebeb;
+    margin: 1px;
+  }
+
+  .itemDone {
+    background-color: #2d1b0c01;
+  }
+
+  .btn-add {
+    background-color: #799eff;
+  }
+
+  .btn-edit {
+    background-color: #f8f7ba;
+  }
+
+  .btn-delete {
+    background-color: #f5d2d2;
+  }
+
+  .btn-save {
+    border: solid 1px #c06c84;
+    background-color: #f8f7ba;
+    color: #c06c84;
+  }
+
+  .btn-cansel {
+    border: solid 1px #c06c84;
+    background-color: #f8f7ba;
+    color: #c06c84;
+  }
+
+  /* .TodoItem {
+    border: solid 1px #c06c84;
+    background-color: #f8f7ba;
+    color: #770022;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+  } */
+}
