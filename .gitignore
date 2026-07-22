@@ -24,6 +24,7 @@ yarn-error.log*
 
 # local directories - planning and rules
 /.agents/
+/.claude/
 /projectsText
 
 # developer documentation
