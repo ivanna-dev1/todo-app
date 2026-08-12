@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import Login from "./components/Login";
+
 
 function Input(props) {
   const [todo, setTodo] = useState("");
@@ -12,7 +14,8 @@ function Input(props) {
             method: 'POST',
             headers: {
               // Кажемо бекенду, що відправляємо JSON 
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${props.token}`
             },
             // Передаємо наш текст
             body: JSON.stringify({ text: todo })
@@ -52,7 +55,8 @@ function EditInput(props) {
             const response = await fetch(`http://localhost:5000/todos/${props.todo._id}`, {
               method: 'PUT',
               headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${props.token}`
               },
               body: JSON.stringify({ text: todo })
             });
@@ -99,6 +103,7 @@ function TodoItem(props) {
           setTodos={props.setTodos}
           todo={props.todo}
           setIsEdit={setIsEdit}
+          token={props.token}
         />
       ) : (
         props.todo.text
@@ -111,24 +116,33 @@ function TodoItem(props) {
 }
 
 export default function TodoApp() {
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [todos, setTodos] = useState([]);
   useEffect(() => {
+    if (!token) return;
     // Робимо GET-запит на наш бекенд (переконайся, що бекенд запущений на порту 5000)
-    fetch('http://localhost:5000/todos')
+    fetch('http://localhost:5000/todos', { headers: { Authorization: `Bearer ${token}` } })
       .then(response => response.json())
       .then(data => {
         // Зберігаємо отримані з бази задачі в наш стан
-        setTodos(data);
+        if (Array.isArray(data)) {
+          setTodos(data);
+        }
       })
       .catch(error => console.error("Помилка завантаження:", error));
-  }, []); // Пустий масив означає, що це виконається лише один раз при старті
-
+  }, [token]);
+  const handleLogout = () => {
+    setToken(null);
+    localStorage.removeItem("token");
+  }
   const done = todos.filter((todo) => todo.done).length;
+  if (!token) return <Login setToken={setToken} />;
 
   return (
     <div className="todo-app-project">
       <div className="todo-card">
-        <Input setTodos={setTodos} />
+        <button className="btn-logout" onClick={handleLogout}> Logout </button>
+        <Input setTodos={setTodos} token={token} />
         <p>
           Done{done}/{todos.length}
         </p>
@@ -146,7 +160,8 @@ export default function TodoApp() {
                     await fetch(`http://localhost:5000/todos/${todo._id}`, {
                       method: 'PUT',
                       headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
                       },
                       // Передаємо тільки нове значення done
                       body: JSON.stringify({ done: newStatus })
@@ -165,15 +180,18 @@ export default function TodoApp() {
                   }
                 }}
               />
-
-              <TodoItem todo={todo} setTodos={setTodos} />
+              <TodoItem todo={todo} setTodos={setTodos} token={token} />
               <button
                 className="btn-delete"
                 onClick={async () => {
                   try {
                     // Спочатку відправляємо запит на видалення до бази даних
                     await fetch(`http://localhost:5000/todos/${todo._id}`, {
-                      method: 'DELETE'
+                      method: 'DELETE',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                      },
                     });
                     // Якщо бекенд успішно видалив, тоді видаляємо задачу з екрану (з нашого стейту)
                     setTodos((prevTodos) =>
