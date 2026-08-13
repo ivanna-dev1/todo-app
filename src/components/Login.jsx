@@ -51,14 +51,35 @@ export default function Login({ setToken }) {
         }
     }
     return (
-        <form>
-            <h2>Login</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <input value={userName} onChange={e => setUserName(e.target.value)} type="text" placeholder="User name" />
-            <input value={email} onChange={e => setEmail(e.target.value)} type="text" placeholder="Email" />
-            <input value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" />
-            <button type="submit" onClick={handleLogin}>Login</button>
-            <button type="submit" onClick={handleRegister}>Register</button>
-        </form>
+        <div className="login-container">
+            <form className="login-form">
+                <h2>Welcome</h2>
+                {error && <p className="error-message">{error}</p>}
+                <div className="inputs-group">
+                    <input 
+                        value={userName} 
+                        onChange={e => setUserName(e.target.value)} 
+                        type="text" 
+                        placeholder="User name" 
+                    />
+                    <input 
+                        value={email} 
+                        onChange={e => setEmail(e.target.value)} 
+                        type="text" 
+                        placeholder="Email" 
+                    />
+                    <input 
+                        value={password} 
+                        onChange={e => setPassword(e.target.value)} 
+                        type="password" 
+                        placeholder="Password" 
+                    />
+                </div>
+                <div className="buttons-group">
+                    <button type="submit" onClick={handleLogin} className="btn-login-action">Login</button>
+                    <button type="submit" onClick={handleRegister} className="btn-register-action">Register</button>
+                </div>
+            </form>
+        </div>
     );
 }

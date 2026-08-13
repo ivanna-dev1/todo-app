@@ -1,97 +1,344 @@
-.todo-app-project {
-  padding: 30px;
-  background-color: #d6e6f2;
+/* Modern Color Scheme
+   Dark Teal: #224248
+   Medium Teal: #325E6A
+   Bright Teal: #44A1A4
+   Accent Orange: #FF9A00
+*/
+
+body {
+  margin: 0;
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #224248;
+}
+
+/* Auth / Login Styling */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
+  background-color: #224248;
+  padding: 20px;
+}
+
+.login-form {
+  background-color: #325E6A;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid rgba(68, 161, 164, 0.3);
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.login-form h2 {
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  font-size: 28px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.error-message {
+  color: #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin: 0;
+  text-align: center;
+  border: 1px solid rgba(255, 107, 107, 0.2);
+}
+
+.inputs-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.inputs-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 2px solid #44A1A4;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #224248;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.inputs-group input:focus {
+  border-color: #FF9A00;
+  box-shadow: 0 0 8px rgba(255, 154, 0, 0.4);
+}
+
+.buttons-group {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-login-action, .btn-register-action {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.btn-login-action {
+  background-color: #FF9A00;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 154, 0, 0.3);
+}
+
+.btn-login-action:hover {
+  background-color: #e08800;
+  transform: translateY(-1px);
+}
+
+.btn-register-action {
+  background-color: #44A1A4;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(68, 161, 164, 0.3);
+}
+
+.btn-register-action:hover {
+  background-color: #388f92;
+  transform: translateY(-1px);
+}
+
+/* Main Todo App Styling */
+.todo-app-project {
+  min-height: 100vh;
+  background-color: #224248;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+}
+
+.todo-card {
+  background-color: #325E6A;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid rgba(68, 161, 164, 0.2);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Logout Button */
+.btn-logout {
+  align-self: flex-end;
+  background-color: transparent;
+  color: #44A1A4;
+  border: 2px solid #44A1A4;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.btn-logout:hover {
+  background-color: #44A1A4;
+  color: #ffffff;
+}
+
+/* Todo Form Input Group */
+.todo-card form {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.todo-card form input[type="text"] {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 2px solid #44A1A4;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #224248;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.todo-card form input[type="text"]:focus {
+  border-color: #FF9A00;
+  box-shadow: 0 0 8px rgba(255, 154, 0, 0.4);
+}
+
+.btn-add {
+  background-color: #FF9A00;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 154, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-add:hover {
+  background-color: #e08800;
+  transform: translateY(-1px);
+}
+
+/* Progress Text */
+.todo-card p {
+  margin: 0;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  border-bottom: 1px solid rgba(68, 161, 164, 0.3);
+  padding-bottom: 10px;
+}
+
+/* Todo List */
+.todo-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.todo-item {
+  display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  background-color: rgba(34, 66, 72, 0.5);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(68, 161, 164, 0.2);
+  gap: 12px;
+}
 
-  .todo-card {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    width: 100%;
-    max-width: 450px;
-    margin-top: 40px;
-  }
+.todo-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #FF9A00;
+  cursor: pointer;
+}
 
-  .sub-todo-item {
-    display: flex;
-    align-items: center;
-    /* justify-content: space-between; */
-    /* padding: 10px; */
-  }
+.sub-todo-item {
+  flex: 1;
+  font-size: 16px;
+  color: #ffffff;
+  word-break: break-all;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
 
-  /* 
-  .editing-input {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* padding: 10px; */
-  /* } */
+.todo-text {
+  flex: 1;
+  word-break: break-all;
+}
 
-  .todo-item {
-    display: flex;
-    /* justify-content: space-around; */
-    align-items: center;
-  }
+.todo-text.done {
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.4);
+}
 
-  .done {
-    text-decoration: line-through;
-    background-color: #cbd5dcbc;
-    color: rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-  }
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
 
-  button {
-    border: solid black 1px;
-    border-radius: 5px;
-    margin: 1px;
-  }
+.edit-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 2px solid #44A1A4;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #224248;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
 
-  input {
-    border: solid 2px;
-    border-radius: 3px;
-    background-color: #f5ebeb;
-    margin: 1px;
-  }
+.edit-input:focus {
+  border-color: #FF9A00;
+}
 
-  .itemDone {
-    background-color: #2d1b0c01;
-  }
+.edit-buttons-group {
+  display: flex;
+  gap: 8px;
+}
 
-  .btn-add {
-    background-color: #799eff;
-  }
+/* Todo item actions */
+.btn-edit, .btn-delete, .btn-save, .btn-cansel {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-  .btn-edit {
-    background-color: #f8f7ba;
-  }
+.btn-edit {
+  background-color: #44A1A4;
+  color: #ffffff;
+}
 
-  .btn-delete {
-    background-color: #f5d2d2;
-  }
+.btn-edit:hover {
+  background-color: #388f92;
+}
 
-  .btn-save {
-    border: solid 1px #c06c84;
-    background-color: #f8f7ba;
-    color: #c06c84;
-  }
+.btn-delete {
+  background-color: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
 
-  .btn-cansel {
-    border: solid 1px #c06c84;
-    background-color: #f8f7ba;
-    color: #c06c84;
-  }
+.btn-delete:hover {
+  background-color: #ff6b6b;
+  color: #ffffff;
+}
 
-  /* .TodoItem {
-    border: solid 1px #c06c84;
-    background-color: #f8f7ba;
-    color: #770022;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 10px;
-  } */
+.btn-save {
+  background-color: #FF9A00;
+  color: #ffffff;
+}
+
+.btn-save:hover {
+  background-color: #e08800;
+}
+
+.btn-cansel {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-cansel:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }

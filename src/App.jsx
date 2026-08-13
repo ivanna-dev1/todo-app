@@ -47,44 +47,46 @@ function EditInput(props) {
     props.setIsEdit(false);
   }
   return (
-    <>
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          try {
-            const response = await fetch(`http://localhost:5000/todos/${props.todo._id}`, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${props.token}`
-              },
-              body: JSON.stringify({ text: todo })
-            });
-            const updatedTodo = await response.json();
-            props.setTodos((prevTodos) =>
-              prevTodos.map((item) => {
-                if (item._id === props.todo._id) {
-                  return { ...item, text: todo };
-                }
-                return item;
-              }),
-            );
-            setTodo("");
-            props.setIsEdit(false);
-          } catch (error) {
-            console.error(" Error update todo: ", error);
-          }
-        }}
-      >
-        <input
-          type="text"
-          value={todo}
-          onChange={(e) => setTodo(e.target.value)}
-        />
+    <form
+      className="edit-form"
+      onSubmit={async (e) => {
+        e.preventDefault();
+        try {
+          const response = await fetch(`http://localhost:5000/todos/${props.todo._id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${props.token}`
+            },
+            body: JSON.stringify({ text: todo })
+          });
+          const updatedTodo = await response.json();
+          props.setTodos((prevTodos) =>
+            prevTodos.map((item) => {
+              if (item._id === props.todo._id) {
+                return { ...item, text: todo };
+              }
+              return item;
+            }),
+          );
+          setTodo("");
+          props.setIsEdit(false);
+        } catch (error) {
+          console.error(" Error update todo: ", error);
+        }
+      }}
+    >
+      <input
+        type="text"
+        value={todo}
+        onChange={(e) => setTodo(e.target.value)}
+        className="edit-input"
+      />
+      <div className="edit-buttons-group">
         <button className="btn-save" type="submit"> Save </button>
-      </form>
-      <button className="btn-cansel" onClick={handleCancle}> Cancel </button>
-    </>
+        <button className="btn-cansel" type="button" onClick={handleCancle}> Cancel </button>
+      </div>
+    </form>
   );
 }
 
@@ -92,25 +94,24 @@ function TodoItem(props) {
   const [isEdit, setIsEdit] = useState(false);
 
   return (
-    <div
-      className={["sub-todo-item", props.todo.done && "done"]
-        .filter(Boolean)
-        .join(" ")}
-    >
+    <div className="sub-todo-item">
       {isEdit ? (
         <EditInput
-          className="editing-input"
           setTodos={props.setTodos}
           todo={props.todo}
           setIsEdit={setIsEdit}
           token={props.token}
         />
       ) : (
-        props.todo.text
-      )}{" "}
-      <button className="btn-edit" onClick={() => setIsEdit(true)}>
-        Edit
-      </button>
+        <span className={props.todo.done ? "todo-text done" : "todo-text"}>
+          {props.todo.text}
+        </span>
+      )}
+      {!isEdit && (
+        <button className="btn-edit" onClick={() => setIsEdit(true)}>
+          Edit
+        </button>
+      )}
     </div>
   );
 }
