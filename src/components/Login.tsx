@@ -1,14 +1,14 @@
 import React from "react";
 import { useState } from "react";
+import { LoginProps } from "../types";
 
-
-export default function Login({ setToken }) {
+export default function Login({ setToken, setUsername }: LoginProps) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
     const [error, setError] = useState("");
 
-    const handleLogin = async (e) => {
+    const handleLogin = async (e: React.MouseEvent) => {
         e.preventDefault();
         try {
             const response = await fetch('http://localhost:5000/api/auth/login', {
@@ -18,18 +18,20 @@ export default function Login({ setToken }) {
             console.log(data);
             if (response.ok === true) {
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("username", data.username);
                 setToken(data.token);
+                setUsername(data.username);
             }
             else if (response.ok === false) {
                 setError(data.error || "Something went wrong! " + response.status);
             }
         }
-        catch (error) {
+        catch (error: any) {
             setError(error.message);
         }
     }
 
-    const handleRegister = async (e) => {
+    const handleRegister = async (e: React.MouseEvent) => {
         e.preventDefault();
         try {
             const response = await fetch("http://localhost:5000/api/auth/register", {
@@ -46,7 +48,7 @@ export default function Login({ setToken }) {
                 setError(data.error || "Something went wrong!" + response.status);
             }
         }
-        catch (error) {
+        catch (error: any) {
             setError(error.message);
         }
     }
@@ -56,23 +58,23 @@ export default function Login({ setToken }) {
                 <h2>Welcome</h2>
                 {error && <p className="error-message">{error}</p>}
                 <div className="inputs-group">
-                    <input 
-                        value={userName} 
-                        onChange={e => setUserName(e.target.value)} 
-                        type="text" 
-                        placeholder="User name" 
+                    <input
+                        value={userName}
+                        onChange={e => setUserName(e.target.value)}
+                        type="text"
+                        placeholder="User name"
                     />
-                    <input 
-                        value={email} 
-                        onChange={e => setEmail(e.target.value)} 
-                        type="text" 
-                        placeholder="Email" 
+                    <input
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        type="email"
+                        placeholder="Email"
                     />
-                    <input 
-                        value={password} 
-                        onChange={e => setPassword(e.target.value)} 
-                        type="password" 
-                        placeholder="Password" 
+                    <input
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        type="password"
+                        placeholder="Password"
                     />
                 </div>
                 <div className="buttons-group">

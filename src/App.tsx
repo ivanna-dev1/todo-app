@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Login from "./components/Login";
+import { EditInputProps, InputProps, TodoItemProps, Todo } from "./types";
 
-
-function Input(props) {
+function Input(props: InputProps) {
   const [todo, setTodo] = useState("");
   return (
     <form
@@ -41,7 +41,7 @@ function Input(props) {
   );
 }
 
-function EditInput(props) {
+function EditInput(props: EditInputProps) {
   const [todo, setTodo] = useState(props.todo.text);
   function handleCancle() {
     props.setIsEdit(false);
@@ -90,7 +90,7 @@ function EditInput(props) {
   );
 }
 
-function TodoItem(props) {
+function TodoItem(props: TodoItemProps) {
   const [isEdit, setIsEdit] = useState(false);
 
   return (
@@ -118,7 +118,8 @@ function TodoItem(props) {
 
 export default function TodoApp() {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const [todos, setTodos] = useState([]);
+  const [username, setUsername] = useState(localStorage.getItem("username") || "");
+  const [todos, setTodos] = useState<Todo[]>([]);
   useEffect(() => {
     if (!token) return;
     // Робимо GET-запит на наш бекенд (переконайся, що бекенд запущений на порту 5000)
@@ -134,25 +135,30 @@ export default function TodoApp() {
   }, [token]);
   const handleLogout = () => {
     setToken(null);
+    setUsername("");
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
   }
   const done = todos.filter((todo) => todo.done).length;
-  if (!token) return <Login setToken={setToken} />;
+  if (!token) return <Login setToken={setToken} setUsername={setUsername} />;
 
   return (
     <div className="todo-app-project">
       <div className="todo-card">
-        <button className="btn-logout" onClick={handleLogout}> Logout </button>
+        <div className="todo-header">
+          {username && <span className="user-display">Hi, {username}!</span>}
+          <button className="btn-logout" onClick={handleLogout}> Logout </button>
+        </div>
         <Input setTodos={setTodos} token={token} />
         <p>
-          Done{done}/{todos.length}
+          Done task {done}/{todos.length}
         </p>
         <ul>
           {todos.map((todo) => (
             <li key={todo._id} className="todo-item">
               <input
                 type="checkbox"
-                value={todo.done}
+                checked={todo.done}
                 onChange={async (e) => {
                   try {
                     // Зберігаємо новий статус (true або false)

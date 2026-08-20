@@ -145,9 +145,23 @@ body {
   gap: 20px;
 }
 
+/* Header area with username and logout */
+.todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.user-display {
+  font-size: 18px;
+  font-weight: 600;
+  color: #FF9A00;
+  letter-spacing: 0.5px;
+}
+
 /* Logout Button */
 .btn-logout {
-  align-self: flex-end;
   background-color: transparent;
   color: #44A1A4;
   border: 2px solid #44A1A4;
